@@ -38,22 +38,7 @@ int main(int argc, char *argv[])
 	char *buf = new char[bufLen]; // buffer to hold each line
 
 	is.open(tempFileName);
-	if (!is) {
-		is.open(fileName);
-		createTempFile = true;
-	}
-
-	if (true == createTempFile) {
-		while (is.good() && !is.eof()) {
-			is.read(buf, MAXCHARS);
-			data += buf;	
-		}
-		is.close();
-		ofstream os(tempFileName);
-		cout << data;
-		os << data;
-		os.close();		
-	}
+	is.open(fileName);
 
 	if(is.good()) {
 		while(!is.eof()) {
@@ -63,10 +48,7 @@ int main(int argc, char *argv[])
 		}
 	} 
 	is.close();
-
 	delete[] buf;
-
-		
 
 	data += "       " ; // padding;
 
