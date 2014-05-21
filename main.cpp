@@ -31,15 +31,42 @@ int main(int argc, char *argv[])
 	unsigned const int MAXCHARS = 100;
 	ifstream is;
 	
-	// Section that reads file into a string
 	string data; // string that will hold data
 
 	int bufLen = 100;
 	char *buf = new char[bufLen]; // buffer to hold each line
 
 	is.open(tempFileName);
-	is.open(fileName);
+   	if (!is.good() || true == createTempFile ) {
 
+		// Temp File doesn't exist. Read from disk and write to temp
+		// file.
+		is.close();
+		is.open(fileName);
+		if (!is.good()) { 
+			cout << "File open error!\n";
+			return 1;
+		}
+
+		while (!is.eof()) {
+			is.read(buf,MAXCHARS);
+			data += buf;
+		}
+		is.close();
+
+
+		ofstream os;
+		os.open(tempFileName);
+		if (!os.good()) {
+			os << data;
+			os.close();	
+		} else {
+			cout << "Temp file write error.";
+		}
+	}
+
+
+	// If the temp file exists, we read it differently.
 	if(is.good()) {
 		while(!is.eof()) {
 			is.getline(buf,MAXCHARS);
@@ -51,7 +78,6 @@ int main(int argc, char *argv[])
 	delete[] buf;
 
 	data += "       " ; // padding;
-
 	// We modify the string to have a few spaces so that when it ends
 	// we have some time to read the last part.
 
@@ -76,11 +102,12 @@ int main(int argc, char *argv[])
 
 	int charsToRead = callCount + MAXCHARS;
 	int charsFromEnd = data.size() - MAXCHARS;
-	for (unsigned i = callCount; i < charsToRead; i++)
-		cout << data[i];
 
-	if (charsFromEnd < charsToRead )
-	{
+	for (unsigned int x = 0; x < data.size(); x++) {
+		cout << data[x];
+	}
+
+	if (charsFromEnd < charsToRead ) {
 		callCount = 0;
 		ofstream os("/tmp/callCount");
 		os << callCount;
