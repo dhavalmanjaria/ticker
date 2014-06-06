@@ -1,25 +1,23 @@
 ticker
 ======
 
-This is a ticker primarily to be used for Conky. But hopefully it can be used in other places as well.
+This is a ticker program that displays a file line by line in the
+i3status bar.
 
-### test.c
+### Usage:
 
-This is a file that tests how we can get the output of i3status from
-stdin.
+~~~~
+bar {
+        status_command i3status -c ~/.i3status.conf | /path/to/ticker /path/to/TODO
+		mode dock
+		tray_output primary 
+}
+~~~~
 
-### test2.c
+In your i3config for the stauts bar section, pipe the output of
+i3status to the ticker executable and you'll see each line of the file
+you specify after it tick by in your status bar. This is mostly useful
+for TODOs and reminders, I find.
 
-This file tests how we can append our own string to i3status' output
-that we recieve, and output that as a whole.
 
-### readFile.c
 
-Readfile is a simple function to get data from the TODO file and store
-it in temp. Eventually the string that we return from readFile, will
-be appended to the i3status output as shown in test.c and we'll have
-something to work with there.
-
-### main.c
-
-This file is deprecated.
