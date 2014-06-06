@@ -2,16 +2,24 @@
 #include <fstream>
 #include <vector>
 
-int main()
+int main(int argc, char *argv[])
 {
 	using namespace std;
 
-	ifstream in("/home/dhaval/Documents/TODO");
+	string fileName;
+
+	if (argc != 2) {
+		cout << "Usage: " << endl;
+		cout << "\ti3status | ticker <fileName>" << endl;
+		return 0;
+	} else {
+		fileName = argv[1];
+	}
+
+	ifstream in(fileName);
 
 	string buf, fullString;
 	vector<string> lines;
-
-
 
 	while(in.good()) {
 		getline(in,buf);
@@ -20,10 +28,9 @@ int main()
 	in.close();
 
 
-	unsigned int i = 0;
 	while(cin.good()) {
 
-		for (int i = 0; lines.size() > i; i++) {
+		for (unsigned int i = 0; lines.size() > i; i++) {
 			getline(cin,buf);
 			fullString = lines[i] + " | " + buf;
 			cout << fullString << endl;
