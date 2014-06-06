@@ -32,8 +32,7 @@ int main(int argc, char *argv[])
 
 		for (unsigned int i = 0; lines.size() > i; i++) {
 			getline(cin,buf);
-			fullString = lines[i] + " | " + buf;
-			cout << fullString << endl;
+			cout << lines[i] << " | " << buf;
 			cout << flush;
 		}
 		
